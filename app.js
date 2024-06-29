@@ -17,10 +17,13 @@ connectDB();
 
 const transactionRoutes = require('./routes/transaction');
 const userRoutes = require('./routes/user');
+app.use(express.static(path.join(__dirname,'./client/build')));
 app.use('/transaction', transactionRoutes);
 app.use('/',userRoutes);
 
-
+app.use('*',function(req,res){
+    res.sendFile(path.join(__dirname,'./client/build/index.html'));
+})
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
